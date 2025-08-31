@@ -49,20 +49,28 @@ fun LoginRegisterScreen() {
             // Поле имени
             OutlinedTextField(
                 value = username,
-                onValueChange = { username = it },
+                onValueChange = { newValue ->
+                    if (newValue.length <= 8) {
+                        username = newValue
+                    }
+                },
                 label = { Text("Имя пользователя") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Поле пароля
+            // Поле пароля, только цифры, максимум 8 символов
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it },
-                label = { Text("Пароль") },
+                onValueChange = { newValue ->
+                    if (newValue.length <= 8 && newValue.all { it.isDigit() }) {
+                        password = newValue
+                    }
+                },
+                label = { Text("Пароль (только цифры)") },
                 visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
 
