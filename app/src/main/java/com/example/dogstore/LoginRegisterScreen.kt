@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.example.dogstore.data.UserStore
 
 @Composable
-fun LoginRegisterScreen() {
+fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
     // Состояние полей
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -108,7 +108,7 @@ fun LoginRegisterScreen() {
                         Toast.makeText(context, "Введите имя и пароль", Toast.LENGTH_SHORT).show()
                     } else if (userStore.validateCredentials(username, password)) {
                         Toast.makeText(context, "Вход успешен", Toast.LENGTH_SHORT).show()
-                        // TODO: переход на MainScreen
+                        onLoginSuccess() // переход на MainScreen
                     } else {
                         Toast.makeText(
                             context,
