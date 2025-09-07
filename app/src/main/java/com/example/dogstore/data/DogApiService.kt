@@ -37,7 +37,6 @@ object DogApiService {
         return try {
             dogInfoApi.getCatsList()
         } catch (_: Exception) {
-            // Возвращаем пустой список в случае ошибки
             emptyList()
         }
     }

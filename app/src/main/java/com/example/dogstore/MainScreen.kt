@@ -115,8 +115,6 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
-                
-                // Надпись "Картинка" удалена
             }
             
             
@@ -143,7 +141,9 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
                 
                 Text(
                     text = "Tags: ${dog.tags.joinToString(", ")}",
-                    fontSize = 14.sp
+                    fontSize = 14.sp,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                 )
             }
         }
