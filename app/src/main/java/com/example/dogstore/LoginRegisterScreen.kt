@@ -121,7 +121,6 @@ fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
             ) {
                 Text("Login")
             }
-
         }
     }
 }

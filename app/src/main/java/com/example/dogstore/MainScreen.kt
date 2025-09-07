@@ -106,7 +106,7 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
                 val imageModel = remember { mutableStateOf<Any?>(null) }
                 
                 LaunchedEffect(dog.id) {
-                    imageModel.value = dogRepository.getDogImage(dog.id)
+                    imageModel.value = dogRepository.getDogImage()
                 }
                 
                 AsyncImage(

@@ -12,8 +12,8 @@ class DogRepository {
     }
     
     // Получение изображения животного по ID
-    suspend fun getDogImage(id: String): ByteArray? = withContext(Dispatchers.IO) {
-        val response = dogApiService.getDogImageUrl(id)
+    suspend fun getDogImage(): ByteArray? = withContext(Dispatchers.IO) {
+        val response = dogApiService.getDogImageUrl()
         return@withContext response?.bytes()
     }
 }

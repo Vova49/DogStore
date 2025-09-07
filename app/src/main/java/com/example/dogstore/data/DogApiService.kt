@@ -36,16 +36,16 @@ object DogApiService {
     suspend fun getDogInfoList(): List<DogInfo> {
         return try {
             dogInfoApi.getCatsList()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // Возвращаем пустой список в случае ошибки
             emptyList()
         }
     }
     
-    suspend fun getDogImageUrl(id: String): okhttp3.ResponseBody? {
+    suspend fun getDogImageUrl(): okhttp3.ResponseBody? {
         return try {
             dogImageApi.getDogImage("https://images.dog.ceo/breeds/pitbull/pitbull_dog.jpg")
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
