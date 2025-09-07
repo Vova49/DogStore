@@ -44,7 +44,7 @@ object DogApiService {
     
     suspend fun getDogImageUrl(id: String): okhttp3.ResponseBody? {
         return try {
-            dogImageApi.getDogImage("$DOG_IMAGE_BASE_URL/breeds/random/images/$id.jpg")
+            dogImageApi.getDogImage("https://images.dog.ceo/breeds/pitbull/pitbull_dog.jpg")
         } catch (e: Exception) {
             null
         }
