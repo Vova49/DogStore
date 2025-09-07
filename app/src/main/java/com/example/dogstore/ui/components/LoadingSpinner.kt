@@ -13,13 +13,10 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +41,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun LoadingSpinner(
     isLoading: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onAnimationComplete: () -> Unit = {}
 ) {
     // State to ensure minimum display time for very fast loads
     var shouldShowSpinner by remember { mutableStateOf(false) }
@@ -55,9 +52,11 @@ fun LoadingSpinner(
             // Show immediately
             shouldShowSpinner = true
         } else {
-            // Add small delay before hiding for smooth transition
-            delay(300)
+            // Use the fade-out animation duration for proper timing
             shouldShowSpinner = false
+            // Wait for the fade-out animation to complete
+            delay(300)
+            onAnimationComplete()
         }
     }
     
@@ -117,71 +116,6 @@ fun LoadingSpinner(
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF666666)
                 )
-            }
-        }
-    }
-}
-
-/**
- * Alternative spinner with pulsing dots for variety
- */
-@Composable
-fun PulsingDotsSpinner(
-    isLoading: Boolean,
-    modifier: Modifier = Modifier
-) {
-    var shouldShowSpinner by remember { mutableStateOf(false) }
-    
-    LaunchedEffect(isLoading) {
-        if (isLoading) {
-            shouldShowSpinner = true
-        } else {
-            delay(300)
-            shouldShowSpinner = false
-        }
-    }
-    
-    AnimatedVisibility(
-        visible = shouldShowSpinner,
-        enter = fadeIn(animationSpec = tween(200)),
-        exit = fadeOut(animationSpec = tween(300))
-    ) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .background(Color.White),
-            contentAlignment = Alignment.Center
-        ) {
-            // Custom pulsing dots animation
-            Row {
-                val infiniteTransition = rememberInfiniteTransition(label = "dots_pulse")
-                
-                repeat(3) { index ->
-                    val scale by infiniteTransition.animateFloat(
-                        initialValue = 0.4f,
-                        targetValue = 1f,
-                        animationSpec = infiniteRepeatable(
-                            animation = tween(
-                                durationMillis = 600,
-                                delayMillis = index * 200
-                            ),
-                            repeatMode = RepeatMode.Reverse
-                        ),
-                        label = "dot_$index"
-                    )
-                    
-                    Box(
-                        modifier = Modifier
-                            .size(12.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFF1976D2))
-                            .alignBy { 0 }
-                    )
-                    
-                    if (index < 2) {
-                        Spacer(modifier = Modifier.width(8.dp))
-                    }
-                }
             }
         }
     }

@@ -43,9 +43,11 @@ fun MainScreen() {
     val dogRepository = remember { DogRepository() }
     var dogs by remember { mutableStateOf<List<DogInfo>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
+    var showContent by remember { mutableStateOf(false) }
     
     LaunchedEffect(Unit) {
         isLoading = true
+        showContent = false
         dogs = dogRepository.getDogsListWithLoading()
         // Simulate a minimum loading time for very fast loads
         kotlinx.coroutines.delay(500)
@@ -60,11 +62,12 @@ fun MainScreen() {
         // Loading spinner overlay
         LoadingSpinner(
             isLoading = isLoading,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            onAnimationComplete = { showContent = true }
         )
         
-        // Main content (visible when not loading)
-        if (!isLoading) {
+        // Main content (visible only after spinner has fully faded out)
+        if (showContent && !isLoading) {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
