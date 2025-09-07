@@ -9,7 +9,7 @@ class DogRepository {
     
     fun getLoadingStateManager(): LoadingStateManager = loadingStateManager
     
-    // Получение списка информации о животных из API с отслеживанием состояния
+    // Getting list of animal information from API with state tracking
     suspend fun getDogsListWithLoading(): List<DogInfo> = withContext(Dispatchers.IO) {
         try {
             loadingStateManager.startLoading()
@@ -23,12 +23,12 @@ class DogRepository {
         }
     }
     
-    // Получение списка информации о животных из API (legacy method)
+    // Getting list of animal information from API (legacy method)
     suspend fun getDogsList(): List<DogInfo> = withContext(Dispatchers.IO) {
         return@withContext dogApiService.getDogInfoList()
     }
     
-    // Получение изображения животного по ID с отслеживанием состояния
+    // Getting animal image by ID with state tracking
     suspend fun getDogImageWithLoading(): ByteArray? = withContext(Dispatchers.IO) {
         try {
             loadingStateManager.setLoadingImages(true)
@@ -44,13 +44,13 @@ class DogRepository {
         }
     }
     
-    // Получение изображения животного по ID (legacy method)
+    // Getting animal image by ID (legacy method)
     suspend fun getDogImage(): ByteArray? = withContext(Dispatchers.IO) {
         val response = dogApiService.getDogImageUrl()
         return@withContext response?.bytes()
     }
     
-    // Проверка завершения загрузки
+    // Checking if loading is complete
     fun isLoadingComplete(): Boolean {
         return loadingStateManager.isLoadingComplete()
     }

@@ -18,7 +18,7 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             LoginRegisterScreen(
                 onLoginSuccess = {
                     navController.navigate("main") {
-                        popUpTo("login") { inclusive = true } // удаляет экран логина из backstack
+                        popUpTo("login") { inclusive = true } // remove login screen from backstack
                     }
                 }
             )

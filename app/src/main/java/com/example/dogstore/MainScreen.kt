@@ -71,7 +71,7 @@ fun MainScreen() {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                // Заголовок вверху по центру
+                // Header at the top center
                 Text(
                     text = "List Of Dogs",
                     fontSize = 24.sp,
@@ -83,7 +83,7 @@ fun MainScreen() {
                     color = Color.Black
                 )
                 
-                // Прокручиваемый список собак
+                // Scrollable list of dogs
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -113,7 +113,7 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Левая часть - изображение
+            // Left side - image
             Box(
                 modifier = Modifier
                     .size(100.dp)
@@ -138,7 +138,7 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
             
             Spacer(modifier = Modifier.width(16.dp))
             
-            // Правая часть - информация
+            // Right side - information
             Column(
                 modifier = Modifier.weight(1f)
             ) {

@@ -32,7 +32,7 @@ object DogApiService {
     val dogInfoApi: DogInfoApi = dogInfoRetrofit.create(DogInfoApi::class.java)
     val dogImageApi: DogImageApi = dogImageRetrofit.create(DogImageApi::class.java)
     
-    // Реальные API методы
+    // Real API methods
     suspend fun getDogInfoList(): List<DogInfo> {
         return try {
             dogInfoApi.getCatsList()

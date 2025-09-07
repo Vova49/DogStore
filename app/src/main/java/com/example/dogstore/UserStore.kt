@@ -12,25 +12,25 @@ class UserStore(context: Context) {
     private val gson = Gson()
     private val usersKey = "users"
 
-    // Получить всех пользователей
+    // Get all users
     fun getUsers(): MutableMap<String, String> {
         val json = prefs.getString(usersKey, null) ?: return mutableMapOf()
         val type = object : TypeToken<MutableMap<String, String>>() {}.type
         return gson.fromJson(json, type)
     }
 
-    // Проверка существования пользователя
+    // Check if user exists
     fun userExists(username: String): Boolean {
         return getUsers().containsKey(username)
     }
 
-    // Проверка логина
+    // Check login
     fun validateCredentials(username: String, password: String): Boolean {
         val users = getUsers()
         return users[username] == password
     }
 
-    // Добавление нового пользователя
+    // Add new user
     fun saveUser(username: String, password: String) {
         val users = getUsers()
         users[username] = password

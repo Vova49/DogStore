@@ -29,11 +29,11 @@ import com.example.dogstore.data.UserStore
 
 @Composable
 fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
-    // Состояние полей
+    // Field states
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // Вся разметка
+    // Entire layout
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +46,7 @@ fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Поле имени
+            // Name field
             OutlinedTextField(
                 value = username,
                 onValueChange = { newValue ->
@@ -54,13 +54,13 @@ fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
                         username = newValue
                     }
                 },
-                label = { Text("Имя пользователя") },
+                label = { Text("Username") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Поле пароля, только цифры, максимум 8 символов
+            // Password field, only numbers, maximum 8 characters
             OutlinedTextField(
                 value = password,
                 onValueChange = { newValue ->
@@ -68,7 +68,7 @@ fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
                         password = newValue
                     }
                 },
-                label = { Text("Пароль (только цифры)") },
+                label = { Text("Password (numbers only)") },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -79,17 +79,17 @@ fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
             val context = LocalContext.current
             val userStore = remember { UserStore(context) }
 
-            // Проверка регистрации
+            // Registration check
             Button(
                 onClick = {
                     if (username.isBlank() || password.isBlank()) {
-                        Toast.makeText(context, "Введите имя и пароль", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Enter username and password", Toast.LENGTH_SHORT).show()
                     } else if (userStore.userExists(username)) {
-                        Toast.makeText(context, "Пользователь уже существует", Toast.LENGTH_SHORT)
+                        Toast.makeText(context, "User already exists", Toast.LENGTH_SHORT)
                             .show()
                     } else {
                         userStore.saveUser(username, password)
-                        Toast.makeText(context, "Регистрация успешна", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
                         username = ""
                         password = ""
                     }
@@ -101,18 +101,18 @@ fun LoginRegisterScreen(onLoginSuccess: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Проверка входа
+            // Login check
             Button(
                 onClick = {
                     if (username.isBlank() || password.isBlank()) {
-                        Toast.makeText(context, "Введите имя и пароль", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Enter username and password", Toast.LENGTH_SHORT).show()
                     } else if (userStore.validateCredentials(username, password)) {
-                        Toast.makeText(context, "Вход успешен", Toast.LENGTH_SHORT).show()
-                        onLoginSuccess() // переход на MainScreen
+                        Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+                        onLoginSuccess() // navigate to MainScreen
                     } else {
                         Toast.makeText(
                             context,
-                            "Неверное имя пользователя или пароль",
+                            "Invalid username or password",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

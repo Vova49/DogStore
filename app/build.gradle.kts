@@ -49,14 +49,16 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    // Library for working with JSON
     implementation("com.google.code.gson:gson:2.13.1")
+    // For navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
     
-    // Retrofit для работы с API
+    // Retrofit for working with API
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     
-    // Coil для загрузки изображений
+    // Coil for loading images
     implementation("io.coil-kt:coil-compose:2.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
