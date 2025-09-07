@@ -36,14 +36,20 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.dogstore.data.DogInfo
 import com.example.dogstore.data.DogRepository
+import com.example.dogstore.ui.components.LoadingSpinner
 
 @Composable
 fun MainScreen() {
     val dogRepository = remember { DogRepository() }
     var dogs by remember { mutableStateOf<List<DogInfo>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
     
     LaunchedEffect(Unit) {
-        dogs = dogRepository.getDogsList()
+        isLoading = true
+        dogs = dogRepository.getDogsListWithLoading()
+        // Simulate a minimum loading time for very fast loads
+        kotlinx.coroutines.delay(500)
+        isLoading = false
     }
     
     Box(
@@ -51,28 +57,37 @@ fun MainScreen() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Column(
+        // Loading spinner overlay
+        LoadingSpinner(
+            isLoading = isLoading,
             modifier = Modifier.fillMaxSize()
-        ) {
-            // Заголовок вверху по центру
-            Text(
-                text = "List Of Dogs",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp, bottom = 16.dp),
-                color = Color.Black
-            )
-            
-            // Прокручиваемый список собак
-            LazyColumn(
+        )
+        
+        // Main content (visible when not loading)
+        if (!isLoading) {
+            Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(dogs) { dog ->
-                    DogItem(dog, dogRepository)
-                    Spacer(modifier = Modifier.height(8.dp))
+                // Заголовок вверху по центру
+                Text(
+                    text = "List Of Dogs",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, bottom = 16.dp),
+                    color = Color.Black
+                )
+                
+                // Прокручиваемый список собак
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(dogs) { dog ->
+                        DogItem(dog, dogRepository)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
         }
