@@ -3,7 +3,6 @@ package com.example.dogstore.data
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Url
 
 interface DogInfoApi {
@@ -38,19 +37,14 @@ object DogApiService {
         return try {
             dogInfoApi.getCatsList()
         } catch (e: Exception) {
-            // Возвращаем моковые данные в случае ошибки
-            listOf(
-                DogInfo("1", "2023-01-01", listOf("friendly", "playful")),
-                DogInfo("2", "2023-02-15", listOf("calm", "smart")),
-                DogInfo("3", "2023-03-20", listOf("energetic", "loyal")),
-                DogInfo("4", "2023-04-10", listOf("protective", "gentle"))
-            )
+            // Возвращаем пустой список в случае ошибки
+            emptyList()
         }
     }
     
     suspend fun getDogImageUrl(id: String): okhttp3.ResponseBody? {
         return try {
-            dogImageApi.getDogImage("https://images.dog.ceo/breeds/pitbull/pitbull_dog.jpg")
+            dogImageApi.getDogImage("$DOG_IMAGE_BASE_URL/breeds/random/images/$id.jpg")
         } catch (e: Exception) {
             null
         }
