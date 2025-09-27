@@ -126,7 +126,7 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
                 
                 AsyncImage(
                     model = preloadedImage,
-                    contentDescription = "Картинка",
+                    contentDescription = "Image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
