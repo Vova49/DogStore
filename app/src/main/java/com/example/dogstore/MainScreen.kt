@@ -121,14 +121,11 @@ fun DogItem(dog: DogInfo, dogRepository: DogRepository) {
                     .background(Color.LightGray),
                 contentAlignment = Alignment.Center
             ) {
-                val imageModel = remember { mutableStateOf<Any?>(null) }
-                
-                LaunchedEffect(dog.id) {
-                    imageModel.value = dogRepository.getDogImage()
-                }
+                // Use preloaded image from repository
+                val preloadedImage = remember { dogRepository.getPreloadedDogImage(dog.id) }
                 
                 AsyncImage(
-                    model = imageModel.value,
+                    model = preloadedImage,
                     contentDescription = "Картинка",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
